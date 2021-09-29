@@ -1,68 +1,65 @@
 {% extends 'base.html' %}
-{% block title %} Signin {% endblock title %}
+{% block title %} Login {% endblock title %}
 
 {% block content %}
 
-    <div class="container" style="display: flex;">
-        <div class="col-md-3"></div>
-        
-        <div class="signin_div">
-            <h3>Signin</h3>
-            {{ error }}
-            <form class="row g-3 needs-validation" novalidate method="POST">
+    <br>
+    <div class="container " id="container">
+        <div class="form-container sign-in-container">
+            <form method="POST">
                 {% csrf_token %}
+                <h6> Signin </h6>
+                <small class="text-danger">{{ error }}</small>
 
-                <div class="col-md-4">
-                    <label for="validationCustomUsername" class="form-label">Username</label>
-                    <div class="input-group has-validation">
-                        <input type="text" class="form-control" name="username" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                        <div class="invalid-feedback">
-                        Please choose a username.
-                        </div>
-                    </div>
-                </div>
-        
-                <div class="col-md-4">
-                    <label for="validationCustomUsername" class="form-label">Password</label>
-                    <div class="input-group has-validation">
-                    <input type="password" class="form-control" name="password" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                    <div class="invalid-feedback">
-                        Please choose a password.
-                    </div>
-                    </div>
-                </div>
-        
-                <div class="col-12">
-                <button class="btn btn-primary" type="submit">Submit form</button>
-                </div>
-        
+                <input type="text" name="username" id="username" placeholder="Username" required>
+				<small class="text-danger" id="uname-required">Username required</small>
+                
+                <input type="password" name="password" id="password" placeholder="Password" required>
+				<small class="text-danger" id="pword-required">Password required</small>
+
+                <button class="btn-login" onclick="loginBtn()">Submit</button>
             </form>
         </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-right">
+                    <h1>Welcome </h1>
+                    <p>If you are not a member of the site, become a member of the site in less than 1 minute</p>
+                    <a href="{% url 'signup' %}"><button class="ghost" id="signIn">Register</button></a>
+                </div>
+            </div>
+        </div>
     </div>
-
+    
     <script>
-          // Example starter JavaScript for disabling form submissions if there are invalid fields
-(function () {
-  'use strict'
+        var loginUnameRequiredx = document.getElementById("uname-required")
+        var loginPasswordRequiredx = document.getElementById("pword-required")
+            
+        loginUnameRequiredx.style.display = 'none';
+        loginPasswordRequiredx.style.display = 'none';
+        
+        function loginBtn() {
+            var loginUsernameInput = document.getElementById('username').value;
+            var loginUnameRequired = document.getElementById("uname-required")
+            var loginPasswordInput = document.getElementById('password').value;
+            var loginPasswordRequired = document.getElementById("pword-required")
+                
+            if (loginUsernameInput == "") {
+                loginUnameRequired.style.display = 'block'
+            } else {
+                loginUnameRequired.style.display = 'none';
+            }
+            
+            if (loginPasswordInput == "") {
+                loginPasswordRequired.style.display = 'block'
+            }else {
+                loginPasswordRequired.style.display = 'none'
+            }
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  var forms = document.querySelectorAll('.needs-validation')
-
-  // Loop over them and prevent submission
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
+            if (prevent == 1) {
+                e.preventDefault()
+            }
         }
-
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()
-      </script>
-
-
+    </script>
 
 {% endblock %}

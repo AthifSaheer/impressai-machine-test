@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login as auth_login, logout
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from .models import JokeCount
+from django.contrib.auth.decorators import login_required
 
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.serializers import serialize
@@ -25,16 +27,18 @@ def bot(request, message, chat_id=chat_id, token=token):
     bot = telegram.Bot(token=token)
     bot.sendMessage(chat_id=chat_id, text=message)
 
+@login_required(login_url='login')
 def home(request):
-    # if request.user:
-    #     bot(request, str(get_ip(request)))
-    # else:
-    # bot(request, serialize('json', User.objects.all(), fields=('username'), cls=LazyEncoder))
-    return render(request,'home.html')    
+    print("re----------", request.user)
+    joke_count = JokeCount.objects.all()
+    return render(request,'home.html', {'joke_counts': joke_count})    
 
 def login(request):
     if request.method == 'GET':
-        return render(request,'login.html')   
+        if request.user.is_authenticated:
+            return redirect('home')
+        else:
+            return render(request,'login.html')   
 
     if request.method == 'POST':
         print("--------------------")
@@ -57,10 +61,10 @@ def login(request):
 
 def signup(request):
     if request.method == 'GET':
-        # if request.user.is_authenticated:
-        #     return redirect('home')
-        # else:
-        return render(request, 'signup.html')
+        if request.user.is_authenticated:
+            return redirect('home')
+        else:
+            return render(request, 'signup.html')
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -78,3 +82,51 @@ def signup(request):
             return render(request, 'signup.html', {'pword_error': pwrd_error})
 
     return render(request, 'signup.html')
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect('login')
+
+
+def stupid(request):
+    # bot(request, "Stupid!")
+
+    user = request.user
+    if JokeCount.objects.filter(user=user).exists():
+        joke_count = JokeCount.objects.get(user=user)
+    else:
+        joke_count = JokeCount.objects.create(user=user)
+
+    joke_count.stupid += 1
+    joke_count.save()
+
+    return redirect('home')
+
+def fat(request):
+    # bot(request, "Fat!")
+
+    user = request.user
+    if JokeCount.objects.filter(user=user).exists():
+        joke_count = JokeCount.objects.get(user=user)
+    else:
+        joke_count = JokeCount.objects.create(user=user)
+
+    joke_count.fat += 1
+    joke_count.save()
+
+    return redirect('home')
+
+def dumb(request):
+    # bot(request, "Dumb!")
+
+    user = request.user
+    if JokeCount.objects.filter(user=user).exists():
+        joke_count = JokeCount.objects.get(user=user)
+    else:
+        joke_count = JokeCount.objects.create(user=user)
+
+    joke_count.dumb += 1
+    joke_count.save()
+
+    return redirect('home')

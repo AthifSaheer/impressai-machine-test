@@ -12,6 +12,204 @@
 </head>
 <body>
 
+    <style>
+        a {
+            text-decoration: none;
+            padding: 4px;
+        }
+
+        h1 {
+            font-size: 15px;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 26px;
+            margin: 20px 0 30px;
+        }
+
+        span {
+            font-size: 12px;
+        }
+
+        a {
+          text-decoration:none;
+            color: #333;
+            font-size: 14px;
+            margin: 15px 0;
+        }
+
+        button {
+            border-radius: 5px;
+            border: 1px solid #dcdcdc;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 12px;
+            padding: 6px 45px;
+            transition: transform 80ms ease-in;
+        }
+
+        .btn-reg {
+            background-color: #27ae60;
+            margin-top: 20px;
+        }
+
+        button:active {
+            transform: scale(0.9);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        button.ghost {
+            background-color: transparent;
+            border-color: #fff;
+        }
+
+        form {
+
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 50px;
+            height: 100%;
+            text-align: center;
+        }
+
+        input {
+            background-color: #eee;
+            border: none;
+            padding: 12px 15px;
+            margin: 8px 0;
+            width: 100%;
+            cursor: text;
+        }
+
+        input:focus, textarea:focus, select:focus{
+            outline: none;
+        }
+
+        .container {
+            direction: ltr;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
+            position: relative;
+            overflow: hidden;
+            width: 768px;
+            min-height: 480px;
+            max-width: 100%;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all .6s ease-in-out;
+        }
+
+        .sign-in-container {
+            left: 0;
+            width: 50%;
+            z-index: 2;
+        }
+
+        .social-container {
+            margin: 20px 0;
+        }
+
+        .social-container a {
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sign-up-container {
+            left: 0;
+            width: 50%;
+            z-index: 1;
+            opacity: 0;
+        }
+
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform .6s ease-in-out;
+            z-index: 100;
+        }
+
+        .overlay {
+            background: #ff416c;
+            background: linear-gradient(to right, #ff4b2b, #ff416c);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 0 0;
+            height: 100%;
+            width: 200%;
+            color: #fff;
+            position: relative;
+            left: -100%;
+            transform: translateX(0);
+            transition: transform .6s ease-in-out;
+        }
+
+        .overlay-left {
+            transform: translateX(-20%);
+        }
+
+        .overlay-right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .overlay-panel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 40px;
+            text-align: center;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            transform: translateX(0);
+            transition: transform .6s ease-in-out;
+        }
+
+        .right-panel-active .overlay-container {
+            transform: translateX(-100%);
+        }
+
+        .right-panel-active .sign-in-container {
+            transform: translateX(100%);
+        }
+
+        .right-panel-active .overlay {
+            transform: translateX(50%);
+        }
+
+        .btns_div {
+            display: flex;
+            flex-wrap: wrap;
+            align-content: center;
+            justify-content: space-evenly;
+        }
+   
+    </style>
+
     {% block content %}
     {% endblock %}
 

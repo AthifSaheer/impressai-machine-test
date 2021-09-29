@@ -3,12 +3,68 @@
 
 {% block content %}
 
-    <a href="{% url 'signup' %}">Signup</a>
-    <a href="{% url 'login' %}">Login</a>
+   
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+        <p class="navbar-brand" href="#">Impressai</p>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
 
-    <button>Stupid</button>
-    <button>Fat</button>
-    <button>Dumb</button>
+            {% if user.is_authenticated %}
+            <span class="h6 mt-1 text-dark">Hi, {{ user.username }}</span>
+            <a class="btn btn-outline-dark btn-sm m-2" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a href="{% url 'signup' %}" class="px-2"><h6>Signup</h6></a>
+            <a href="{% url 'login' %}" class="px-2"><h6>Login</h6></a>
+            {% endif %}
+
+        </div>
+    </nav>
 
 
+    <h5 class="text-center text-secondary m-2">Telegram Bot</h5>
+    <p class="text-center text-secondary m-2">Click below buttons.</p>
+
+    <div class="btns_div">
+        <a href="{% url 'stupid' %}"><button class="btn btn-outline-dark btn-block" onclick="alertMessage()">Stupid</button></a>
+        <a href="{% url 'fat' %}"><button class="btn btn-outline-info btn-block" onclick="alertMessage()">Fat</button></a>
+        <a href="{% url 'dumb' %}"><button class="btn btn-outline-danger btn-block" onclick="alertMessage()">Dumb</button></a>
+    </div>
+    <p class="alert alert-success d-none" id="alert">Message successfully sent.</p>
+
+    <div class="mx-5 my-2">
+        <table class="table table-striped table-hover table-light">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">User</th>
+                <th scope="col">Stupid</th>
+                <th scope="col">Fat</th>
+                <th scope="col">Dumb</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for jk in joke_counts %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ jk.user }}</td>
+                    <td>{{ jk.stupid }}</td>
+                    <td>{{ jk.fat }}</td>
+                    <td>{{ jk.dumb }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+
+      <script>
+        function alertMessage() {
+            setTimeout(function() {
+                document.getElementById('alert').style.display = 'none';
+            }, 2000);
+        }
+      </script>
 {% endblock %}
