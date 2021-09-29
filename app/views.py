@@ -1,14 +1,10 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from .models import JokeCount
 from django.contrib.auth.decorators import login_required
 
-from django.core.serializers.json import DjangoJSONEncoder
-from django.core.serializers import serialize
 from django.contrib.auth.models import User
 from django.conf import settings
-# from ipware.ip import get_ip
 import telegram
 import requests
 
@@ -16,12 +12,6 @@ import requests
 URL = settings.BOT_URL
 token = settings.BOT_TOKEN
 chat_id = settings.BOT_CHAT_ID
-
-class LazyEncoder(DjangoJSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, dict):
-            return str(self.obj)
-        return super().default(obj)
 
 def bot(request, message, chat_id=chat_id, token=token):
     bot = telegram.Bot(token=token)
