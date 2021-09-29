@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 BOT_TOKEN = "1970075166:AAHvikoR-Pu_i2HvYtBCvnnkoYlcmqd5LDI"
 BOT_URL = "https://api.telegram.org/bot%s", BOT_TOKEN
-BOT_CHAT_ID = "-1001514820237"
+BOT_CHAT_ID = "-1001514820237" # ID GOTS FROM https://api.telegram.org/bot1970075166:AAHvikoR-Pu_i2HvYtBCvnnkoYlcmqd5LDI/getUpdates
 
 # Application definition
 
@@ -58,7 +58,7 @@ ROOT_URLCONF = 'impressai.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR, './templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
