@@ -27,7 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-BOT_TOKEN = "1970075166:AAHvikoR-Pu_i2HvYtBCvnnkoYlcmqd5LDI"
+import private
+
+BOT_TOKEN = private.BOT_TOKEN
 BOT_URL = "https://api.telegram.org/bot%s", BOT_TOKEN
 BOT_CHAT_ID = "-1001514820237" # ID GOTS FROM https://api.telegram.org/bot1970075166:AAHvikoR-Pu_i2HvYtBCvnnkoYlcmqd5LDI/getUpdates
 

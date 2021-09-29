@@ -29,42 +29,27 @@ def bot(request, message, chat_id=chat_id, token=token):
 
 @login_required(login_url='login')
 def home(request):
-    print("re----------", request.user)
     joke_count = JokeCount.objects.all()
     return render(request,'home.html', {'joke_counts': joke_count})    
 
 def login(request):
     if request.method == 'GET':
-        if request.user.is_authenticated:
-            return redirect('home')
-        else:
-            return render(request,'login.html')   
+        return render(request,'login.html')   
 
     if request.method == 'POST':
-        print("--------------------")
         username = request.POST.get('username')
         password = request.POST.get('password')
-        # password2 = request.GET['password']
-        print("username", username)
-        print("password", password)
-        # print("password2", password2)
-        usr = authenticate(request, username=username, password=password)
-        print(usr)
-        
-        if usr is not None:
+        try:
+            usr = User.objects.get(username=username, password=password)
             auth_login(request, usr)
             return redirect('home')
-        else:
+        except User.DoesNotExist:
             error = 'Invalid creditials ! !'
-            print(error)
             return render(request, 'login.html', {'error':error})
 
 def signup(request):
     if request.method == 'GET':
-        if request.user.is_authenticated:
-            return redirect('home')
-        else:
-            return render(request, 'signup.html')
+        return render(request, 'signup.html')
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -78,7 +63,6 @@ def signup(request):
             return redirect('home')
         else:
             pwrd_error = "password did not match"
-            print(pwrd_error)
             return render(request, 'signup.html', {'pword_error': pwrd_error})
 
     return render(request, 'signup.html')
@@ -90,7 +74,7 @@ def logout(request):
 
 
 def stupid(request):
-    # bot(request, "Stupid!")
+    bot(request, "Stupid!")
 
     user = request.user
     if JokeCount.objects.filter(user=user).exists():
@@ -104,7 +88,7 @@ def stupid(request):
     return redirect('home')
 
 def fat(request):
-    # bot(request, "Fat!")
+    bot(request, "Fat!")
 
     user = request.user
     if JokeCount.objects.filter(user=user).exists():
@@ -118,7 +102,7 @@ def fat(request):
     return redirect('home')
 
 def dumb(request):
-    # bot(request, "Dumb!")
+    bot(request, "Dumb!")
 
     user = request.user
     if JokeCount.objects.filter(user=user).exists():
